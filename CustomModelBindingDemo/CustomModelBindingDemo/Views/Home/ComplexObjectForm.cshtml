@@ -16,8 +16,10 @@
        @Html.EditorFor(m => m.LastName)
     </p>
     <p>
-       @Html.LabelFor(m => m.DateOfBirth) 
-       <input id="dateofbirth" class="date-field" name="DateOfBirth" type="text" />
+       @Html.LabelFor(m => m.DateOfBirth)<br />
+       Day:@Html.TextBoxFor(m => m.DateOfBirth.Value.Day, new { style = "width:50px" })  
+       Month:@Html.TextBoxFor(m => m.DateOfBirth.Value.Month, new { style = "width:50px" })  
+       Year:@Html.TextBoxFor(m => m.DateOfBirth.Value.Year, new { style = "width:50px" })
     </p>
     <p>
        <input name="roles" type="checkbox" value="Manager" /> Manager<br />

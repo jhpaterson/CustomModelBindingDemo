@@ -37,7 +37,8 @@ namespace CustomModelBindingDemo
             RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(
                 typeof(CustomModelBindingDemo.Models.User),
-                new CustomModelBindingDemo.Infrastructure.UserModelBinder(ModelBinders.Binders.DefaultBinder));
+                new CustomModelBindingDemo.Infrastructure.UserModelBinder
+                    (new CustomModelBindingDemo.Infrastructure.DateOfBirthModelBinder()));
             ModelBinders.Binders.Add(
                 typeof(CustomModelBindingDemo.Models.Member),
                 new CustomModelBindingDemo.Infrastructure.MemberModelBinder()
