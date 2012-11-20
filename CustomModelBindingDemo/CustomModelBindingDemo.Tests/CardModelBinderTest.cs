@@ -35,8 +35,10 @@ namespace CustomModelBindingDemo.Tests
             // Arrange
             var formCollection = new NameValueCollection { 
                 { "foo.CardNo", "9999999999999999" },
-                { "foo.Code", "999" }
-            };
+                { "foo.Code", "999" },
+                { "Expiry.Value.Month", "7" },
+                { "Expiry.Value.Year", "2014" }
+            };     // not sure why it doesn't work with foo prefix on Expiry?
 
             var valueProvider = new NameValueCollectionValueProvider(formCollection, null);
             var modelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(Card));
@@ -48,19 +50,7 @@ namespace CustomModelBindingDemo.Tests
                 ModelMetadata = modelMetadata
             };
 
-            var mockHttpContext = new Mock<HttpContextBase>();
-            mockHttpContext
-                .SetupGet(c => c.Request["Expiry.Value.Month"])
-                .Returns(() => "7");
-            mockHttpContext
-                .SetupGet(c => c.Request["Expiry.Value.Year"])
-                .Returns(() => "2014");
-
-            ControllerContext controllerContext = new ControllerContext()
-            {
-                HttpContext = mockHttpContext.Object
-            };
-
+            ControllerContext controllerContext = new ControllerContext();
             CardModelBinder b = new CardModelBinder();
 
             // Act

@@ -12,13 +12,13 @@ namespace CustomModelBindingDemo.Infrastructure
             if (propertyDescriptor.PropertyType == typeof(DateTime?)
             && propertyDescriptor.Name == "DateOfBirth")
             {
-                var request = controllerContext.HttpContext.Request;
-                var prefix = propertyDescriptor.Name;
+                var valueProvider = bindingContext.ValueProvider;
 
                 var date = string.Format("{0}/{1}/{2}",
-                           request["DateOfBirth.Value.Day"],
-                           request["DateOfBirth.Value.Month"],
-                           request["DateOfBirth.Value.Year"]);
+                           valueProvider.GetValue("DateOfBirth.Value.Day").AttemptedValue,
+                           valueProvider.GetValue("DateOfBirth.Value.Month").AttemptedValue,
+                           valueProvider.GetValue("DateOfBirth.Value.Year").AttemptedValue
+                           );
 
                 DateTime dateOfBirth;
                 if (DateTime.TryParse(date, out dateOfBirth))

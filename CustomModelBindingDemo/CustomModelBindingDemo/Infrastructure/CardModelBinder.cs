@@ -15,12 +15,12 @@ namespace CustomModelBindingDemo.Infrastructure
             if (propertyDescriptor.PropertyType == typeof(DateTime?)
                 && propertyDescriptor.Name == "Expiry")
             {
-                var request = controllerContext.HttpContext.Request;
-                var prefix = propertyDescriptor.Name;
+                var valueProvider = bindingContext.ValueProvider;
 
-                var date = string.Format("{0}/{1}",
-                           request["Expiry.Value.Month"],
-                           request["Expiry.Value.Year"]);
+                var date = string.Format("1/{0}/{1}",
+                           valueProvider.GetValue("Expiry.Value.Month").AttemptedValue,
+                           valueProvider.GetValue("Expiry.Value.Year").AttemptedValue
+                           );
 
                 DateTime expiry;
                 if (DateTime.TryParse(date, out expiry))
